@@ -63,7 +63,7 @@ yarn deploy
 yarn start
 ```
 
-📱 Open http://localhost:3000 to see the app.
+📱 Open <http://localhost:3000> to see the app.
 
 > 👩‍💻 Rerun `yarn deploy` whenever you want to deploy new contracts to the frontend. If you haven't made any contract changes, you can run `yarn deploy --reset` for a completely fresh deploy.
 
@@ -101,9 +101,9 @@ uint256 public constant threshold = 1 ether;
 
 ### 🥅 Goals
 
-- [ ] Do you see the balance of the `Staker` contract go up when you `stake()`?
-- [ ] Is your `balance` correctly tracked?
-- [ ] Do you see the events in the `Stake Events` tab?
+- [x] Do you see the balance of the `Staker` contract go up when you `stake()`?
+- [x] Is your `balance` correctly tracked?
+- [x] Do you see the events in the `Stake Events` tab?
 
   ![allStakings](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/80bcc843-034c-4547-8535-129ed494a204)
 
@@ -180,12 +180,12 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 ---
 
-### 🐸 It's a trap!
+### 🐸 It's a trap
 
 - [ ] Make sure funds can't get trapped in the contract! **Try sending funds after you have executed! What happens?**
 - [ ] Try to create a [modifier](https://solidity-by-example.org/function-modifier/) called `notCompleted`. It will check that `ExampleExternalContract` is not completed yet. Use it to protect your `execute` and `withdraw` functions.
 
-### ⚠️ Test it!
+### ⚠️ Test it
 
 - Now is a good time to run `yarn test` to run the automated testing function. It will test that you hit the core checkpoints. You are looking for all green checkmarks and passing tests!
 
@@ -217,7 +217,7 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 ✏️ Edit your frontend config in `packages/nextjs/scaffold.config.ts` to change the `targetNetwork` to `chains.sepolia` (or `chains.optimismSepolia` if you deployed to OP Sepolia)
 
-💻 View your frontend at http://localhost:3000/staker-ui and verify you see the correct network.
+💻 View your frontend at <http://localhost:3000/staker-ui> and verify you see the correct network.
 
 📡 When you are ready to ship the frontend app...
 
@@ -231,7 +231,7 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 > 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own or use a burner wallet. By default 🔥 `burner wallets` are only available on `hardhat` . You can enable them on every chain by setting `onlyLocalBurnerWallet: false` in your frontend config (`scaffold.config.ts` in `packages/nextjs/`)
 
-#### Configuration of Third-Party Services for Production-Grade Apps.
+#### Configuration of Third-Party Services for Production-Grade Apps
 
 By default, 🏗 Scaffold-ETH 2 provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.
 This is great to complete your **SpeedRunEthereum**.
@@ -269,3 +269,4 @@ To know more about its features, check out our [website](https://scaffoldeth.io)
 We welcome contributions to Scaffold-ETH 2!
 
 Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+
