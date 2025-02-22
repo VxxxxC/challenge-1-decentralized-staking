@@ -9,6 +9,7 @@ contract Staker {
     mapping(address => uint256) public balance;
 
     uint256 public constant threshold = 1 ether;
+    uint256 public deadline = block.timestamp + 30 seconds;
 
     constructor(address exampleExternalContractAddress) {
         exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
