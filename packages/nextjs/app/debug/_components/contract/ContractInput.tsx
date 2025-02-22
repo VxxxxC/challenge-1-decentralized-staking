@@ -25,6 +25,7 @@ type ContractInputProps = {
  * Generic Input component to handle input's based on their function param type
  */
 export const ContractInput = ({ setForm, form, stateObjectKey, paramType }: ContractInputProps) => {
+  console.log({ setForm, form, stateObjectKey, paramType });
   const inputProps = {
     name: stateObjectKey,
     value: form?.[stateObjectKey],

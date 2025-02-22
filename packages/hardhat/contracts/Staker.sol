@@ -6,11 +6,21 @@ import "./ExampleExternalContract.sol";
 
 contract Staker {
     ExampleExternalContract public exampleExternalContract;
+    mapping(address => uint256) public balance;
+
+    uint256 public constant threshold = 1 ether;
 
     constructor(address exampleExternalContractAddress) {
         exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
     }
 
+    function stake() external payable {
+        require(msg.value > 0.5 ether, "You must at least send 0.5 ETH !!");
+        balance[address(this)] += msg.value;
+        emit Stake(msg.sender, msg.value);
+    }
+
+    event Stake(address, uint256);
     // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
     // (Make sure to add a `Stake(address,uint256)` event and emit it for the frontend `All Stakings` tab to display)
 
