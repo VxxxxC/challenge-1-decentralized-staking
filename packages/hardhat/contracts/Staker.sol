@@ -22,6 +22,20 @@ contract Staker {
     }
 
     event Stake(address, uint256);
+
+    function execute() external expireDeadline {
+        if (balance[address(this)] > threshold) {
+            exampleExternalContract.complete{ value: address(this).balance }();
+        } else {
+            revert("Balance not over the threshold ETH");
+        }
+    }
+
+    modifier expireDeadline() {
+        require(block.timestamp > deadline, "Deadline not pass yet...");
+        _;
+    }
+
     // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
     // (Make sure to add a `Stake(address,uint256)` event and emit it for the frontend `All Stakings` tab to display)
 
