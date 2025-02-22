@@ -16,7 +16,7 @@ contract Staker {
     }
 
     function stake() external payable {
-        require(msg.value > 0.5 ether, "You must at least send 0.5 ETH !!");
+        require(msg.value > 0.1 ether, "You must at least send 0.1 ETH !!");
         balance[address(this)] += msg.value;
         emit Stake(msg.sender, msg.value);
     }
@@ -34,6 +34,14 @@ contract Staker {
     modifier expireDeadline() {
         require(block.timestamp > deadline, "Deadline not pass yet...");
         _;
+    }
+
+    function timeLeft() public view returns (uint256) {
+        if (block.timestamp >= deadline) {
+            return 0;
+        } else {
+            return deadline - block.timestamp;
+        }
     }
 
     // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
