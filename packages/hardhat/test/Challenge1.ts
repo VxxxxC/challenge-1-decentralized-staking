@@ -35,7 +35,7 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
 
         console.log("\t", " 🧑‍🏫 Tester Address: ", owner.address);
 
-        const startingBalance = await stakerContract.balances(owner.address);
+        const startingBalance = await stakerContract.balance(owner.address);
         console.log("\t", " ⚖️ Starting balance: ", Number(startingBalance));
 
         console.log("\t", " 🔨 Staking...");
@@ -46,7 +46,7 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
         const txResult = await stakeResult.wait();
         expect(txResult?.status).to.equal(1);
 
-        const newBalance = await stakerContract.balances(owner.address);
+        const newBalance = await stakerContract.balance(owner.address);
         console.log("\t", " 🔎 New balance: ", ethers.formatEther(newBalance));
         expect(newBalance).to.equal(startingBalance + ethers.parseEther("0.001"));
       });

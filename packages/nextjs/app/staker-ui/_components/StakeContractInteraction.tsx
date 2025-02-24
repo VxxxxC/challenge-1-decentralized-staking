@@ -35,7 +35,7 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
   });
   const { data: myStake } = useScaffoldReadContract({
     contractName: "Staker",
-    functionName: "balances",
+    functionName: "balance",
     args: [connectedAddress],
     watch: true,
   });
