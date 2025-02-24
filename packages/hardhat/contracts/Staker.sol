@@ -7,6 +7,8 @@ import "./ExampleExternalContract.sol";
 contract Staker {
     ExampleExternalContract public exampleExternalContract;
     mapping(address => uint256) public balance;
+    bool public executed = false;
+    bool public withdrawed = false;
 
     uint256 public constant threshold = 1 ether;
     uint256 public deadline = block.timestamp + 30 seconds;
@@ -24,11 +26,13 @@ contract Staker {
     event Stake(address, uint256);
 
     function execute() external expireDeadline {
+        require(!executed, "Already executed..");
         require(balance[address(this)] >= threshold, "Balance threshold below 1 ETH..");
         exampleExternalContract.complete{ value: address(this).balance }();
     }
 
     function withdraw() external expireDeadline {
+        require(!withdrawed, "Already withdrawed..");
         require(balance[address(this)] < threshold, "Contract balance over threshold!");
         (bool s, ) = msg.sender.call{ value: balance[address(this)] }("");
         require(s);
