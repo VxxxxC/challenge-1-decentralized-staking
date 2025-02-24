@@ -174,9 +174,9 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 ### ⚔️ Side Quests
 
-- [ ] Can `execute()` get called more than once, and is that okay?
-- [ ] Can you stake and withdraw freely after the `deadline`, and is that okay?
-- [ ] What are other implications of _anyone_ being able to withdraw for someone?
+- [x] Can `execute()` get called more than once, and is that okay?
+- [x] Can you stake and withdraw freely after the `deadline`, and is that okay?
+- [x] What are other implications of _anyone_ being able to withdraw for someone?
 
 ---
 
