@@ -182,8 +182,8 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 ### 🐸 It's a trap
 
-- [ ] Make sure funds can't get trapped in the contract! **Try sending funds after you have executed! What happens?**
-- [ ] Try to create a [modifier](https://solidity-by-example.org/function-modifier/) called `notCompleted`. It will check that `ExampleExternalContract` is not completed yet. Use it to protect your `execute` and `withdraw` functions.
+- [x] Make sure funds can't get trapped in the contract! **Try sending funds after you have executed! What happens?**
+- [x] Try to create a [modifier](https://solidity-by-example.org/function-modifier/) called `notCompleted`. It will check that `ExampleExternalContract` is not completed yet. Use it to protect your `execute` and `withdraw` functions.
 
 ### ⚠️ Test it
 
