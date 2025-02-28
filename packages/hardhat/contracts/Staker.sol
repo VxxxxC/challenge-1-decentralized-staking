@@ -37,7 +37,7 @@ contract Staker {
 
     event Stake(address, uint256);
 
-    function execute() external expireDeadline {
+    function execute() external expireDeadline notCompleted {
         if(balance[address(this)] > threshold) {
             require(!executed, "Already executed..");
             exampleExternalContract.complete{ value: balance[address(this)] }();
@@ -45,14 +45,14 @@ contract Staker {
             balance[address(this)] = 0;
 
         }else{
+            if(openForWithdraw) return revert("Please withdraw your funds, as your stake is less than 1 ETH");
             openForWithdraw = true;
-            this.withdraw();
         }
         // require(balance[address(this)] >= threshold, "Balance threshold below 1 ETH..");
         // exampleExternalContract.complete{ value: balance[address(this)] }();
     }
 
-    function withdraw() external expireDeadline {
+    function withdraw() external expireDeadline notCompleted {
         require(openForWithdraw, "withdrawal not open yet...");
         // require(checkStaker(msg.sender), "You are not staked yet...");
         // require(!withdrawal[msg.sender], "Already withdrawed..");
@@ -71,11 +71,6 @@ contract Staker {
         balance[address(this)] = 0;
         executed = false;
         openForWithdraw = false;
-    }
-
-    modifier expireDeadline() {
-        require(block.timestamp > deadline, "Deadline not pass yet...");
-        _;
     }
 
     function timeLeft() public view returns (uint256) {
@@ -97,6 +92,16 @@ contract Staker {
             }
         }
         return false;
+    }
+
+    modifier expireDeadline() {
+        require(block.timestamp > deadline, "Deadline not pass yet...");
+        _;
+    }
+
+    modifier notCompleted() {
+        require(exampleExternalContract.completed() == false, "staking contract execute completed..");
+        _;
     }
 
     // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
