@@ -21,3 +21,8 @@ node_modules
 
 # cli
 dist
+
+# dotenv
+.env
+.env*
+.env/*
