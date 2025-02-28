@@ -108,6 +108,12 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
           await network.provider.send("evm_increaseTime", [72 * 3600]);
           await network.provider.send("evm_mine");
 
+          const ownerNewBalance = await stakerContract.balance(owner.address);
+          console.log("\t", " 🔎 onwer balance: ", ethers.formatEther(ownerNewBalance));
+
+          const secondAccountBalance = await stakerContract.balance(secondAccount.address);
+          console.log("\t", " 🔎 secondAccount balance: ", ethers.formatEther(secondAccountBalance));
+
           console.log("\t", " 🎉 calling execute");
           const execResult = await stakerContract.execute();
           console.log("\t", " 🏷  execResult: ", execResult.hash);
