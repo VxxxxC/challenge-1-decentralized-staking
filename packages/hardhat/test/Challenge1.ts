@@ -35,7 +35,7 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
 
         console.log("\t", " 🧑‍🏫 Tester Address: ", owner.address);
 
-        const startingBalance = await stakerContract.balance(owner.address);
+        const startingBalance = await stakerContract.balances(owner.address);
         console.log("\t", " ⚖️ Starting balance: ", ethers.formatEther(startingBalance));
 
         console.log("\t", " 🔨 Staking...");
@@ -46,7 +46,7 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
         const txResult = await stakeResult.wait();
         expect(txResult?.status).to.equal(1);
 
-        const newBalance = await stakerContract.balance(owner.address);
+        const newBalance = await stakerContract.balances(owner.address);
         console.log("\t", " 🔎 New balance: ", ethers.formatEther(newBalance));
         expect(newBalance).to.equal(startingBalance + newBalance);
       });
@@ -108,10 +108,10 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
           await network.provider.send("evm_increaseTime", [72 * 3600]);
           await network.provider.send("evm_mine");
 
-          const ownerNewBalance = await stakerContract.balance(owner.address);
+          const ownerNewBalance = await stakerContract.balances(owner.address);
           console.log("\t", " 🔎 onwer balance: ", ethers.formatEther(ownerNewBalance));
 
-          const secondAccountBalance = await stakerContract.balance(secondAccount.address);
+          const secondAccountBalance = await stakerContract.balances(secondAccount.address);
           console.log("\t", " 🔎 secondAccount balance: ", ethers.formatEther(secondAccountBalance));
 
           console.log("\t", " 🎉 calling execute");
@@ -123,7 +123,7 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
           expect(result).to.equal(false);
 
           const startingBalance = await ethers.provider.getBalance(secondAccount.address);
-          //console.log("startingBalance before withdraw", ethers.formatEther(startingBalance))
+          console.log("startingBalance before withdraw", ethers.formatEther(startingBalance));
 
           console.log("\t", " 💵 calling withdraw");
           const withdrawResult = await stakerContract.connect(secondAccount).withdraw();
@@ -145,7 +145,7 @@ describe("🚩 Challenge 1: 🔏 Decentralized Staking App", function () {
           const gasCost = tx.gasPrice * receipt.gasUsed;
 
           const endingBalance = await ethers.provider.getBalance(secondAccount.address);
-          //console.log("endingBalance after withdraw", ethers.formatEther(endingBalance))
+          console.log("endingBalance after withdraw", ethers.formatEther(endingBalance));
 
           expect(endingBalance).to.equal(startingBalance + ethers.parseEther("0.001") - gasCost);
         });

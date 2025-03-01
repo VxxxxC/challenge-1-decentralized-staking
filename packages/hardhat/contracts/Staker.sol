@@ -6,7 +6,7 @@ import "./ExampleExternalContract.sol";
 
 contract Staker {
     ExampleExternalContract public exampleExternalContract;
-    mapping(address => uint256) public balance;
+    mapping(address => uint256) public balances;
     mapping(address => bool) withdrawal;
     mapping(address => bool) staked;
     bool public executed = false;
@@ -28,7 +28,7 @@ contract Staker {
     function stake() external payable {
         require(!executed && !openForWithdraw);
         require(msg.value > 0.0001 ether, "You must at least send 0.0001 ETH !!");
-        balance[address(this)] += msg.value;
+        balances[address(this)] += msg.value;
         emit Stake(msg.sender, msg.value);
         if (!checkStaker(msg.sender)) {
             stakers.push(Stakers(msg.sender));
@@ -38,37 +38,26 @@ contract Staker {
     event Stake(address, uint256);
 
     function execute() external expireDeadline notCompleted {
-        if(balance[address(this)] > threshold) {
+        if (balances[address(this)] > threshold) {
             require(!executed, "Already executed..");
-            exampleExternalContract.complete{ value: balance[address(this)] }();
+            exampleExternalContract.complete{ value: address(this).balance }();
             executed = true;
-            balance[address(this)] = 0;
-
-        }else{
-            if(openForWithdraw) return revert("Please withdraw your funds, as your stake is less than 1 ETH");
+            balances[address(this)] = 0;
+        } else {
+            if (openForWithdraw) return revert("Please withdraw your funds, as your stake is less than 1 ETH");
             openForWithdraw = true;
         }
-        // require(balance[address(this)] >= threshold, "Balance threshold below 1 ETH..");
-        // exampleExternalContract.complete{ value: balance[address(this)] }();
     }
 
     function withdraw() external expireDeadline notCompleted {
         require(openForWithdraw, "withdrawal not open yet...");
-        // require(checkStaker(msg.sender), "You are not staked yet...");
-        // require(!withdrawal[msg.sender], "Already withdrawed..");
-        // require(balance[address(this)] < threshold, "Contract balance over threshold!");
-        // (bool s, ) = msg.sender.call{ value: balance[address(this)] }("");
-        // require(s);
-        // balance[address(this)] = address(this).balance;
-        // withdrawal[msg.sender] = true;
-        // staked[msg.sender] = false;
         destroy(msg.sender);
     }
 
     function destroy(address apocalypse) internal {
         // require(checkStaker(msg.sender), "You are not staker!");
         selfdestruct(payable(apocalypse));
-        balance[address(this)] = 0;
+        balances[address(this)] = 0;
         executed = false;
         openForWithdraw = false;
     }
