@@ -193,7 +193,7 @@ const deployedContracts = {
   },
   11155111: {
     ExampleExternalContract: {
-      address: "0x86Ca1f5cED797426A0ABeD0dd35a6C996D064FDb",
+      address: "0x2CbAA1B16B24a74bD5cd82b9fDC47BE61D91575A",
       abi: [
         {
           inputs: [],
@@ -219,7 +219,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Staker: {
-      address: "0x824eBFEB5c870fDAcc37bd19908927950Df022e5",
+      address: "0x7366801BF73a4B80fED0686E43abaB2762f95e81",
       abi: [
         {
           inputs: [
@@ -259,7 +259,7 @@ const deployedContracts = {
               type: "address",
             },
           ],
-          name: "balance",
+          name: "balances",
           outputs: [
             {
               internalType: "uint256",
