@@ -6,7 +6,7 @@ import "./ExampleExternalContract.sol";
 
 contract Staker {
     ExampleExternalContract public exampleExternalContract;
-    mapping(address => uint256) public balances;
+    mapping(address => uint256) public balance;
     mapping(address => bool) withdrawal;
     mapping(address => bool) staked;
     bool public executed = false;
@@ -28,7 +28,7 @@ contract Staker {
     function stake() external payable {
         require(!executed && !openForWithdraw);
         require(msg.value > 0.0001 ether, "You must at least send 0.0001 ETH !!");
-        balances[address(this)] += msg.value;
+        balance[address(this)] += msg.value;
         emit Stake(msg.sender, msg.value);
         if (!checkStaker(msg.sender)) {
             stakers.push(Stakers(msg.sender));
@@ -38,11 +38,11 @@ contract Staker {
     event Stake(address, uint256);
 
     function execute() external expireDeadline notCompleted {
-        if (balances[address(this)] > threshold) {
+        if (balance[address(this)] > threshold) {
             require(!executed, "Already executed..");
-            exampleExternalContract.complete{ value: address(this).balance }();
+            exampleExternalContract.complete{ value: balance[address(this)] }();
             executed = true;
-            balances[address(this)] = 0;
+            balance[address(this)] = 0;
         } else {
             if (openForWithdraw) return revert("Please withdraw your funds, as your stake is less than 1 ETH");
             openForWithdraw = true;
@@ -55,9 +55,8 @@ contract Staker {
     }
 
     function destroy(address apocalypse) internal {
-        // require(checkStaker(msg.sender), "You are not staker!");
         selfdestruct(payable(apocalypse));
-        balances[address(this)] = 0;
+        balance[address(this)] = 0;
         executed = false;
         openForWithdraw = false;
     }
